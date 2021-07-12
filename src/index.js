@@ -15,6 +15,10 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
 	console.log('New WebSocket connection!');
 	socket.emit('message', 'Welcome to Chatty!');
+
+	socket.on('sendMessage', (message) => {
+		io.emit('message', message);
+	});
 });
 
 server.listen(port, () => {
