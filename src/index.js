@@ -22,7 +22,7 @@ io.on('connection', (socket) => {
 	});
 
 	socket.on('shareLocation', (location) => {
-		io.emit('message', `A user shared their location: ${location.latitude}, ${location.longitude}`);
+		io.emit('message', `A user shared their location: https://google.com/maps?q=${location.latitude},${location.longitude}`);
 	});
 
 	socket.on('disconnect', () => {
