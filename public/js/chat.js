@@ -14,11 +14,23 @@ socket.on('message', (msg) => {
 
 $messageForm.addEventListener('submit', (e) => {
 	e.preventDefault();
+
+	// Disable form while message is being sent
+	$messageFormButton.setAttribute('disabled', 'disabled');
+
 	const message = $messageFormInput.value;
 	socket.emit('sendMessage', message, (error) => {
+		// Re-enable form
+		$messageFormButton.removeAttribute('disabled');
+        
+		// Clear input
+		$messageFormInput.value = '';
+		$messageFormInput.focus();
+
 		if (error) {
 			return console.log(error);
 		}
+
 		console.log('Message delivered!');
 	});
 }); 
