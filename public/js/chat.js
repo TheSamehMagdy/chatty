@@ -11,4 +11,4 @@ messageForm.addEventListener('submit', (e) => {
 	e.preventDefault();
 	const message = document.querySelector('#message-input').value;
 	socket.emit('sendMessage', message);
-});
+}); 
