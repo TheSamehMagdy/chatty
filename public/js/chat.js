@@ -10,8 +10,11 @@ const messageForm = document.querySelector('#message-form');
 messageForm.addEventListener('submit', (e) => {
 	e.preventDefault();
 	const message = document.querySelector('#message-input').value;
-	socket.emit('sendMessage', message, () => {
-		console.log('Message delivered');
+	socket.emit('sendMessage', message, (error) => {
+		if (error) {
+			return console.log(error);
+		}
+		console.log('Message delivered!');
 	});
 }); 
 
