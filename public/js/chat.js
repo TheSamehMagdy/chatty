@@ -12,3 +12,17 @@ messageForm.addEventListener('submit', (e) => {
 	const message = document.querySelector('#message-input').value;
 	socket.emit('sendMessage', message);
 }); 
+
+const locationBtn = document.querySelector('#share-location');
+locationBtn.addEventListener('click', () => {
+	if (!navigator.geolocation) {
+		return alert('Sorry, Geolocation is not supported by your browser.');
+	}
+
+	navigator.geolocation.getCurrentPosition((position) => {
+		socket.emit('shareLocation', {
+			latitude: position.coords.latitude,
+			longitude: position.coords.longitude
+		});
+	});
+});
