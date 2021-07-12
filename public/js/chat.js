@@ -10,7 +10,9 @@ const messageForm = document.querySelector('#message-form');
 messageForm.addEventListener('submit', (e) => {
 	e.preventDefault();
 	const message = document.querySelector('#message-input').value;
-	socket.emit('sendMessage', message);
+	socket.emit('sendMessage', message, () => {
+		console.log('Message delivered');
+	});
 }); 
 
 const locationBtn = document.querySelector('#share-location');

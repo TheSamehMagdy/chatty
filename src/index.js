@@ -17,8 +17,9 @@ io.on('connection', (socket) => {
 	socket.emit('message', 'Welcome to Chatty!');
 	socket.broadcast.emit('message', 'A new user has joined the chat.');
 
-	socket.on('sendMessage', (message) => {
+	socket.on('sendMessage', (message, cb) => {
 		io.emit('message', message);
+		cb();
 	});
 
 	socket.on('shareLocation', (location) => {
