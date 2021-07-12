@@ -28,6 +28,8 @@ locationBtn.addEventListener('click', () => {
 		socket.emit('shareLocation', {
 			latitude: position.coords.latitude,
 			longitude: position.coords.longitude
+		}, () => {
+			console.log('Location shared successfully.');
 		});
 	});
 });
