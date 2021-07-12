@@ -22,7 +22,7 @@ $messageForm.addEventListener('submit', (e) => {
 	socket.emit('sendMessage', message, (error) => {
 		// Re-enable form
 		$messageFormButton.removeAttribute('disabled');
-        
+
 		// Clear input
 		$messageFormInput.value = '';
 		$messageFormInput.focus();
@@ -41,11 +41,15 @@ $locationBtn.addEventListener('click', () => {
 		return alert('Sorry, Geolocation is not supported by your browser.');
 	}
 
+	// Disable button while location is being sent
+	$locationBtn.setAttribute('disabled', 'disabled');
+
 	navigator.geolocation.getCurrentPosition((position) => {
 		socket.emit('shareLocation', {
 			latitude: position.coords.latitude,
 			longitude: position.coords.longitude
 		}, () => {
+			$locationBtn.removeAttribute('disabled');
 			console.log('Location shared successfully.');
 		});
 	});
