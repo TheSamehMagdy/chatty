@@ -39,3 +39,8 @@ const removeUser = (id) => {
 		return users.splice(index, 1)[0];
 	}
 };
+
+// Get user by id
+const getUser = (id) => {
+	return users.find((user) => user.id === id);
+};
