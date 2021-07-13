@@ -32,16 +32,18 @@ io.on('connection', (socket) => {
 	});
 
 	socket.on('sendMessage', (message, cb) => {
+		const user = getUser(socket.id);
 		const filter = new Filter();
 		if (filter.isProfane(message)) {
 			return cb('Sorry, profanity is not allowed');
 		}
-		io.emit('message', generateMessage(message));
+		io.to(user.room).emit('message', generateMessage(message));
 		cb();
 	});
 
 	socket.on('shareLocation', (location, cb) => {
-		io.emit('locationMessage', generateLocationMessage(`https://google.com/maps?q=${location.latitude},${location.longitude}`));
+		const user = getUser(socket.id);
+		io.to(user.room).emit('locationMessage', generateLocationMessage(`https://google.com/maps?q=${location.latitude},${location.longitude}`));
 		cb();
 	});
 
