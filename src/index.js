@@ -4,6 +4,7 @@ const express = require('express');
 const socketio = require('socket.io');
 const Filter = require('bad-words');
 const { generateMessage, generateLocationMessage } = require('./utils/messages');
+const { addUser, removeUser, getUser, getUsersInRoom } = require('./utils/users');
 
 const app = express();
 const server = http.createServer(app);
@@ -17,10 +18,17 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
 	console.log('New WebSocket connection!');
 	
-	socket.on('join', ({ username, room }) => {
-		socket.join(room);
+	socket.on('join', ({ username, room }, cb) => {
+		const { error, user } = addUser({ id: socket.id, username, room });
+
+		if (error) {
+			return cb(error);
+		}
+
+		socket.join(user.room);
 		socket.emit('message', generateMessage('Welcome to Chatty!'));
-		socket.broadcast.to(room).emit('message', generateMessage(`${username} has joined the room.`));
+		socket.broadcast.to(user.room).emit('message', generateMessage(`${user.username} has joined the room.`));
+		cb();
 	});
 
 	socket.on('sendMessage', (message, cb) => {
