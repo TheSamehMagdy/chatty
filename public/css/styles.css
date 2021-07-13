@@ -183,3 +183,20 @@ button:disabled {
     font-weight: 300;
     padding: 12px 24px 0 24px;
 }
+
+@media (max-width: 620px) {
+    
+    body {
+        font-size: 90%;
+    }
+
+    .compose {
+        flex-direction: column;
+    }
+    
+    .compose form {
+        flex-direction: column;
+        margin-bottom: 12px;
+    }
+
+}
