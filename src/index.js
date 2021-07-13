@@ -28,7 +28,7 @@ io.on('connection', (socket) => {
 	});
 
 	socket.on('shareLocation', (location, cb) => {
-		io.emit('message', `A user shared their location: https://google.com/maps?q=${location.latitude},${location.longitude}`);
+		io.emit('locationMessage', `https://google.com/maps?q=${location.latitude},${location.longitude}`);
 		cb();
 	});
 
