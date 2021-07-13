@@ -1,0 +1,1 @@
+Simple real-time chat app built with Node.js, Socket.io and Mustache.js
