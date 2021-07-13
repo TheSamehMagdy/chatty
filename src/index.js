@@ -28,6 +28,12 @@ io.on('connection', (socket) => {
 		socket.join(user.room);
 		socket.emit('message', generateMessage('Chatty', 'Welcome to Chatty!'));
 		socket.broadcast.to(user.room).emit('message', generateMessage('Chatty', `${user.username} has joined the room.`));
+
+		io.to(user.room).emit('roomData', {
+			room: user.room,
+			users: getUsersInRoom(user.room)
+		});
+
 		cb();
 	});
 
@@ -52,6 +58,10 @@ io.on('connection', (socket) => {
 		
 		if (user) {
 			io.to(user.room).emit('message', generateMessage('Chatty', `${user.username} has left the room.`));
+			io.to(user.room).emit('roomData', {
+				room: user.room,
+				users: getUsersInRoom(user.room)
+			});
 		}
 	});
 });
