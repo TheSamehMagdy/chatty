@@ -13,7 +13,9 @@ const $messages = document.querySelector('#messages');
 const messageTemplate = document.querySelector('#message-template').innerHTML;
 
 socket.on('message', (message) => {
-	const html = Mustache.render(messageTemplate);
+	const html = Mustache.render(messageTemplate, {
+		message
+	});
 	$messages.insertAdjacentHTML('beforeend', html);
 });
 
