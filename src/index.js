@@ -19,6 +19,10 @@ io.on('connection', (socket) => {
 	socket.emit('message', generateMessage('Welcome to Chatty!'));
 	socket.broadcast.emit('message', generateMessage('A new user has joined the chat.'));
 
+	socket.on('join', ({ username, room }) => {
+		socket.join(room);
+	});
+
 	socket.on('sendMessage', (message, cb) => {
 		const filter = new Filter();
 		if (filter.isProfane(message)) {
