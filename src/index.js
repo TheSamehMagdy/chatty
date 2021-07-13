@@ -16,11 +16,11 @@ app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
 	console.log('New WebSocket connection!');
-	socket.emit('message', generateMessage('Welcome to Chatty!'));
-	socket.broadcast.emit('message', generateMessage('A new user has joined the chat.'));
-
+	
 	socket.on('join', ({ username, room }) => {
 		socket.join(room);
+		socket.emit('message', generateMessage('Welcome to Chatty!'));
+		socket.broadcast.to(room).emit('message', generateMessage(`${username} has joined the room.`));
 	});
 
 	socket.on('sendMessage', (message, cb) => {
